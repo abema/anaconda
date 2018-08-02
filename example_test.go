@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ChimeraCoder/anaconda"
+	"github.com/abema/anaconda"
 )
 
 // Initialize an client library for a given user.
