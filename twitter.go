@@ -84,6 +84,10 @@ type TwitterApi struct {
 	// used for testing
 	// defaults to BaseUrl
 	baseUrl string
+
+	// used for testing
+	// defaults to UploadBaseUrl
+	uploadBaseUrl string
 }
 
 type query struct {
@@ -125,6 +129,7 @@ func NewTwitterApi(access_token string, access_token_secret string) *TwitterApi 
 		HttpClient:           http.DefaultClient,
 		Log:                  silentLogger{},
 		baseUrl:              BaseUrl,
+		uploadBaseUrl:        UploadBaseUrl,
 	}
 	//Configure a timeout to HTTP client (DefaultClient has no default timeout, which may deadlock Mutex-wrapped uses of the lib.)
 	c.HttpClient.Timeout = time.Duration(ClientTimeout * time.Second)
@@ -180,9 +185,14 @@ func (c *TwitterApi) GetDelay() time.Duration {
 	return c.bucket.GetRate()
 }
 
-// SetBaseUrl is experimental and may be removed in future releases.
+// SetBaseUrl will set the base url for test/mock.
 func (c *TwitterApi) SetBaseUrl(baseUrl string) {
 	c.baseUrl = baseUrl
+}
+
+// SetUploadBaseUrl will set the upload base url for test/mock.
+func (c *TwitterApi) SetUploadBaseUrl(uploadBaseUrl string) {
+	c.uploadBaseUrl = uploadBaseUrl
 }
 
 //AuthorizationURL generates the authorization URL for the first part of the OAuth handshake.
